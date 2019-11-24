@@ -26,6 +26,33 @@ const Home: React.FC<IProps> = () => {
     return findUser;
   };
 
+  // CALL GRAPHQL MUTATION
+  const createUser = async () => {
+    const { register } = await Gql.Mutation({
+      register: [
+        {
+          firstName: '김',
+          lastName: '쿠환',
+          email: 'younCCbbdsf231g@naver.com',
+          password: '5678'
+        },
+        {
+          id: true,
+          name: true,
+          firstName: true,
+          lastName: true,
+          email: true
+        }
+      ]
+    });
+
+    findUsers().then(value => {
+      setUsers(value);
+    });
+
+    return register;
+  };
+
   // SET STATE USERS
   useEffect(() => {
     findUsers().then(value => {
@@ -35,17 +62,22 @@ const Home: React.FC<IProps> = () => {
 
   return (
     <div>
-      {users &&
-        users.map((value, index) => (
-          <>
-            <div>ID: {value.id}</div>
-            <div>FIRST NAME: {value.firstName}</div>
-            <div>LAST NAME: {value.lastName}</div>
-            <div>EMAIL: {value.email}</div>
-            <div>NAME: {value.name}</div>
-            <hr />
-          </>
-        ))}
+      <div>
+        <input type='button' value='사용자생성' onClick={createUser}></input>
+      </div>
+      <div>
+        {users &&
+          users.map((value, index) => (
+            <div key={value.id}>
+              <div>ID: {value.id}</div>
+              <div>FIRST NAME: {value.firstName}</div>
+              <div>LAST NAME: {value.lastName}</div>
+              <div>EMAIL: {value.email}</div>
+              <div>NAME: {value.name}</div>
+              <hr />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
