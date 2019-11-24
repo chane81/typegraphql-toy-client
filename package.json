@@ -2,8 +2,9 @@
   "name": "create-next-example-app",
   "scripts": {
     "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "build": "yarn clean && next build && next export -o dist",
+    "start": "next start",
+    "clean": "rimraf dist/* .next/* build/*"
   },
   "dependencies": {
     "next": "^9.1.3",
